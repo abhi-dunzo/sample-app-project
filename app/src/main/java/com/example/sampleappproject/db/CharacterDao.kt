@@ -13,4 +13,7 @@ interface CharacterDao {
 
     @Query("SELECT * FROM characters")
     suspend fun getCharacters(): List<Result>
+    @Query("DELETE  FROM characters")
+    suspend fun delete()
+
 }

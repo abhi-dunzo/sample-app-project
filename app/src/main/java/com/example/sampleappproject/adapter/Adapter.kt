@@ -1,12 +1,17 @@
-package com.example.sampleappproject
+package com.example.sampleappproject.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.sampleappproject.MainActivity
+import com.example.sampleappproject.fragments.CharacterFragment
+import com.example.sampleappproject.R
 import com.example.sampleappproject.models.Result
 
 class Adapter(private val characterList: List<Result>) : RecyclerView.Adapter<Adapter.MainViewHolder>() {
@@ -34,8 +39,26 @@ class Adapter(private val characterList: List<Result>) : RecyclerView.Adapter<Ad
             characterGender.text = characterList[position].gender
             characterStatus.text = characterList[position].status
             characterSpecies.text = characterList[position].species
+
             Glide.with(holder.itemView.context).load(characterList[position].image).into(characterAvatar)
 
         }
+        holder.itemView.setOnClickListener { v ->
+            val activity = v?.context as AppCompatActivity
+            val fragment =  CharacterFragment()
+            var bundle  =Bundle()
+            bundle.putString("title" , characterList[position].name)
+            bundle.putString("image" , characterList[position].image)
+            bundle.putString("location" , characterList[position].location.name)
+            fragment.arguments = bundle
+
+            activity.supportFragmentManager.beginTransaction().setReorderingAllowed(true).replace(R.id.mainActivity, fragment)
+                .addToBackStack(null).commit()
+
+        }
+
+
     }
 }
+
+

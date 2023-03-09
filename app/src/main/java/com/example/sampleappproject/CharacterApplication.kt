@@ -17,4 +17,5 @@ class CharacterApplication:Application() {
         val database = CharactersDatabase.getDatabase(applicationContext)
         characterRepository = CharacterRepository(characterService , database , applicationContext)
     }
+
 }
