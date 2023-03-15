@@ -15,11 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class CharacterServiceTest {
-    var gson: Gson = GsonBuilder()
+    private var gson: Gson = GsonBuilder()
         .setLenient()
         .create()
-    lateinit var mockWebServer :MockWebServer
-    lateinit var characterService: CharacterService
+    private lateinit var mockWebServer :MockWebServer
+    private lateinit var characterService: CharacterService
     @Before
     fun setup(){
         mockWebServer = MockWebServer()
@@ -38,7 +38,6 @@ class CharacterServiceTest {
         mockWebServer.takeRequest()
         print(response)
         Assert.assertEquals(0 , response.body()?.results?.size)
-
     }
     @Test
     fun testGetCharacters_expectedResultListAsResponse() = runTest{
@@ -61,8 +60,6 @@ class CharacterServiceTest {
         print(response.body()?.results)
         Assert.assertEquals(false , response.isSuccessful)
         Assert.assertEquals(404 , response.code())
-
-
     }
 
     @After
