@@ -2,9 +2,13 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android")
+
 }
 apply plugin: 'kotlin-kapt'
-
+kapt {
+    correctErrorTypes = true
+}
 android {
     namespace 'com.example.sampleappproject'
     compileSdk 33
@@ -32,6 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -42,6 +49,7 @@ dependencies {
     }
     testImplementation 'org.mockito:mockito-inline:2.13.0'
     kapt 'com.github.bumptech.glide:compiler:4.15.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
 
     annotationProcessor 'androidx.annotation:annotation:1.6.0'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
@@ -64,7 +72,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    def lifecycle_version = "2.5.1"
+    def lifecycle_version = "2.6.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -72,4 +80,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.1'
     testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
     testImplementation "org.mockito:mockito-core:3.12.4"
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation 'com.google.dagger:dagger:2.44'
+    kapt 'com.google.dagger:dagger-compiler:2.44'
+    implementation "androidx.paging:paging-runtime:3.2.0-alpha04"
+    implementation "androidx.room:room-paging:2.5.0"
+//optional dependency for RxJava support
+    implementation "androidx.paging:paging-rxjava2-ktx:3.2.0-alpha04"
 }

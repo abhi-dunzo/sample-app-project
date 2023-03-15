@@ -10,7 +10,7 @@ import androidx.room.TypeConverters
 data class Result(
     val created: String,
     val gender: String,
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     val id: Int,
     val image: String,
     val name: String,
@@ -19,7 +19,9 @@ data class Result(
     val type: String,
     val url: String,
     @TypeConverters
-    val location: Location ,
+    val location: Location,
+    var page:Int,
+
 //    @TypeConverters
 //    val origin: Origin
 )

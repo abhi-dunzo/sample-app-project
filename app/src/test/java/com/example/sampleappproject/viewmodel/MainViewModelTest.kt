@@ -3,11 +3,15 @@ package com.example.sampleappproject.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.example.sampleappproject.api.CharacterService
 import com.example.sampleappproject.getOrAwaitValue
 import com.example.sampleappproject.models.CharacterList
 import com.example.sampleappproject.models.Info
 import com.example.sampleappproject.models.Location
 import com.example.sampleappproject.models.Result
+import com.example.sampleappproject.paging.CharacterPagingSource
 import com.example.sampleappproject.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,16 +28,18 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-
+//TODO wildcard imports
 class MainViewModelTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
 
 
     @get:Rule
-    val instantTaskExcecutorRule = InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var repository: CharacterRepository
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -55,24 +61,29 @@ class MainViewModelTest {
             status = "Alive",
             type = "",
             url = "https://rickandmortyapi.com/api/character/1",
-            location = Location("hi")
+            location = Location("hi"),1
         )
         )
     )
+    private val pagingLiveData = MutableLiveData<PagingData<Result>>()
+
+    private val pagingData : LiveData<PagingData<Result>>
+        get()  = pagingLiveData
+
 
     private val charactersLiveData = MutableLiveData(characterList)
 
     private val characters: LiveData<CharacterList>
         get() = charactersLiveData
-
+//
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun test_CharactersLiveData() = runTest{
-        Mockito.`when`(repository.characters).thenReturn(characters)
+        Mockito.`when`(repository.getData()).thenReturn(pagingData)
         val sut = MainViewModel(repository)
-        sut.characters
-        val res = sut.characters.getOrAwaitValue()
-        print(res.results)
-        assertEquals(1, res.results.size)
+
+        val res = sut.list.getOrAwaitValue()
+        assertEquals(null, res)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
