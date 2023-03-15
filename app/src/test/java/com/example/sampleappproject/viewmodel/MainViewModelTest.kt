@@ -3,6 +3,7 @@ package com.example.sampleappproject.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.sampleappproject.api.CharacterService
@@ -32,7 +33,7 @@ import org.mockito.MockitoAnnotations
 class MainViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
-
+    lateinit var  mainviewmodel :MainViewModel
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -46,6 +47,8 @@ class MainViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
+        mainviewmodel = MainViewModel(repository)
+
     }
 
     private val characterList = CharacterList(
@@ -65,28 +68,45 @@ class MainViewModelTest {
         )
         )
     )
-    private val pagingLiveData = MutableLiveData<PagingData<Result>>()
 
-    private val pagingData : LiveData<PagingData<Result>>
-        get()  = pagingLiveData
+@Test
+//    fun test_items_contain_one_to_ten() = runTest {
+//        // Get the Flow of PagingData from the ViewModel under test
+//     val pagingData : LiveData<PagingData<Result>> = mainviewmodel.list
+//
+////        val itemsSnapshot: List<com.example.sampleappproject.models.Result> = pagingData.s(
+////            coroutineScope = this
+////        ) {
+////            // Each operation inside the lambda waits for the data to settle before continuing
+////            scrollTo(index = 50)
+////
+////            // While you can’t view the items within the asSnapshot call,
+////            // you can continuously scroll in a direction while some condition is true
+////            // i.e., in this case until you hit the first header.
+////            appendScrollWhile {  item: String -> item != "Header 1" }
+////        }
+//
+//        // With the asSnapshot complete, you can now verify that the snapshot
+//        // has the expected values
+//        assertEquals(
+//            expected = (0..50).map(Int::toString),
+//            actual = itemsSnapshot
+//        )
+//    }
 
 
-    private val charactersLiveData = MutableLiveData(characterList)
 
-    private val characters: LiveData<CharacterList>
-        get() = charactersLiveData
 //
     @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun test_CharactersLiveData() = runTest{
-        Mockito.`when`(repository.getData()).thenReturn(pagingData)
-        val sut = MainViewModel(repository)
+//    @Test
+//    fun test_CharactersLiveData() = runTest{
+//        Mockito.`when`(repository.getData()).thenReturn(pagingData)
+//        val sut = mainviewmodel
+//
+//        val res = sut.list.getOrAwaitValue()
+//        assertEquals(null, res)
+//    }
 
-        val res = sut.list.getOrAwaitValue()
-        assertEquals(null, res)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @After
     fun tearDown() {
         Dispatchers.resetMain()

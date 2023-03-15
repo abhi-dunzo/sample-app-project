@@ -1,23 +1,16 @@
 package com.example.sampleappproject.repository
 
 import android.content.Context
-import android.net.Network
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.*
 import com.example.sampleappproject.api.CharacterService
 import com.example.sampleappproject.db.CharactersDatabase
-import com.example.sampleappproject.models.CharacterList
-import com.example.sampleappproject.models.Info
-import com.example.sampleappproject.models.Result
 import com.example.sampleappproject.paging.CharacterPagingSource
 import com.example.sampleappproject.paging.CharacterRemoteMediator
-import com.example.sampleappproject.utils.NetworkUtils
-import javax.inject.Inject
-import javax.sql.StatementEvent
 
 // TODO TESTING FOR REPOSITORY
+
 class CharacterRepository (
     // TODO Data injection implementation for testing
     private val characterService: CharacterService,
@@ -35,7 +28,7 @@ class CharacterRepository (
         config = PagingConfig(pageSize = 20,
          maxSize = 100
           ),
-    remoteMediator = CharacterRemoteMediator (characterService , charactersDatabase),
+    remoteMediator = CharacterRemoteMediator (characterService , charactersDatabase, messagesMutableLiveData),
         pagingSourceFactory = {charactersDatabase.characterDao().getChar()}
     ).liveData
      fun getDataFromApi() = Pager(

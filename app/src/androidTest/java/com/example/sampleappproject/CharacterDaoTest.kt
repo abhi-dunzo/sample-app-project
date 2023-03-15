@@ -25,6 +25,7 @@ private lateinit var characterDao: CharacterDao
             CharactersDatabase::class.java
         ).allowMainThreadQueries().build()
         characterDao = charactersDatabase.characterDao()
+
      }
 
     @Test

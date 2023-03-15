@@ -28,7 +28,7 @@ class MainViewModel(private val repository: CharacterRepository):ViewModel() {
 //            }
 //        }
 //    }
-    val list = repository.getDataFromApi().cachedIn(viewModelScope)
+    val list = repository.getData().cachedIn(viewModelScope)
 
 //    val characters  : LiveData<CharacterList>
 //    get() = repository.characters
