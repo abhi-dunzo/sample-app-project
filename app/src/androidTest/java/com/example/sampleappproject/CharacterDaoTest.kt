@@ -25,16 +25,17 @@ private lateinit var characterDao: CharacterDao
             CharactersDatabase::class.java
         ).allowMainThreadQueries().build()
         characterDao = charactersDatabase.characterDao()
+
      }
 
     @Test
     fun insertCharacter_expectedSingleCharacter() = runBlocking{
         val character = listOf(Result("1" ,"" ,1 ,"MYiMAGE"  ,"TEST" ,"2" ,"2","2","www.google.com",
-            Location("location for testing")
+            Location("location for testing"),1
         ))
         characterDao.addCharacters(character)
 
-        val result  = characterDao.getCharacters()
+        val result  = characterDao.getCharacters(1)
         Log.d("hlo" ,result[0].toString())
 
         assertEquals(1 , result.size)
@@ -45,11 +46,11 @@ private lateinit var characterDao: CharacterDao
     @Test
     fun deleteCharacter() = runBlocking{
         val character = listOf(Result("1" ,"" ,1 ,"MYiMAGE"  ,"TEST" ,"2" ,"2","2","www.google.com",
-            Location("location for testing")
+            Location("location for testing"),1
         ))
         characterDao.addCharacters(character)
         characterDao.delete()
-        val result = characterDao.getCharacters()
+        val result = characterDao.getCharacters(1)
 
         assertEquals(0 , result.size)
     }

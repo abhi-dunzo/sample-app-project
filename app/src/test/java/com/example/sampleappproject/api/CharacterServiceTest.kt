@@ -13,15 +13,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-
 class CharacterServiceTest {
-    var gson: Gson = GsonBuilder()
+    private var gson: Gson = GsonBuilder()
         .setLenient()
         .create()
-    lateinit var mockWebServer :MockWebServer
-    lateinit var characterService: CharacterService
+    private lateinit var mockWebServer: MockWebServer
+    private lateinit var characterService: CharacterService
+
     @Before
-    fun setup(){
+    fun setup() {
         mockWebServer = MockWebServer()
         characterService = Retrofit.Builder()
             .baseUrl(mockWebServer.url("/"))
@@ -29,44 +29,44 @@ class CharacterServiceTest {
             .build().create(CharacterService::class.java)
 
     }
+
     @Test
-    fun testGetCharacters_expectedEmptyResult() = runTest{
-        val mockResponse  = MockResponse()
+    fun testGetCharacters_expectedEmptyResult() = runTest {
+        val mockResponse = MockResponse()
         mockResponse.setBody("{info:{} ,results:[]}")
         mockWebServer.enqueue(mockResponse)
         val response = characterService.getCharacters(1)
         mockWebServer.takeRequest()
         print(response)
-        Assert.assertEquals(0 , response.body()?.results?.size)
-
+        Assert.assertEquals(0, response.body()?.results?.size)
     }
+
     @Test
-    fun testGetCharacters_expectedResultListAsResponse() = runTest{
-        val mockResponse  = MockResponse()
+    fun testGetCharacters_expectedResultListAsResponse() = runTest {
+        val mockResponse = MockResponse()
         mockResponse.setBody("{info:{} ,results:[{id:1 ,location:{name : a}} , {id:2}]}")
         mockWebServer.enqueue(mockResponse)
         val response = characterService.getCharacters(1)
         mockWebServer.takeRequest()
         print(response.body()?.results)
-        Assert.assertEquals(2 , response.body()?.results?.size)
+        Assert.assertEquals(2, response.body()?.results?.size)
     }
+
     @Test
-    fun testGetCharacters_expectedError() = runTest{
-        val mockResponse  = MockResponse()
+    fun testGetCharacters_expectedError() = runTest {
+        val mockResponse = MockResponse()
         mockResponse.setResponseCode(404)
         mockResponse.setBody("Something Went Wrong")
         mockWebServer.enqueue(mockResponse)
         val response = characterService.getCharacters(1)
         mockWebServer.takeRequest()
         print(response.body()?.results)
-        Assert.assertEquals(false , response.isSuccessful)
-        Assert.assertEquals(404 , response.code())
-
-
+        Assert.assertEquals(false, response.isSuccessful)
+        Assert.assertEquals(404, response.code())
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         mockWebServer.shutdown()
     }
 }
