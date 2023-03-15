@@ -11,29 +11,36 @@ import com.example.sampleappproject.paging.CharacterRemoteMediator
 
 // TODO TESTING FOR REPOSITORY
 
-class CharacterRepository (
+class CharacterRepository(
     // TODO Data injection implementation for testing
     private val characterService: CharacterService,
     private val charactersDatabase: CharactersDatabase,
     private val applicationContext: Context
 ) {
     private var messagesMutableLiveData = MutableLiveData<String>()
-    val messages : LiveData<String> get() = messagesMutableLiveData
-//
+    val messages: LiveData<String> get() = messagesMutableLiveData
+
+    //
 //    private val charactersMutableLiveData= MutableLiveData<CharacterList>()
 //    val characters: LiveData<CharacterList> get() = charactersMutableLiveData
 //// TODO BEST PRACTICES OF ANDROID
-@OptIn(ExperimentalPagingApi::class)
-     fun getData() = Pager(
-        config = PagingConfig(pageSize = 20,
-         maxSize = 100
-          ),
-    remoteMediator = CharacterRemoteMediator (characterService , charactersDatabase, messagesMutableLiveData),
-        pagingSourceFactory = {charactersDatabase.characterDao().getChar()}
+    @OptIn(ExperimentalPagingApi::class)
+    fun getData() = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 100
+        ),
+        remoteMediator = CharacterRemoteMediator(
+            characterService,
+            charactersDatabase,
+            messagesMutableLiveData
+        ),
+        pagingSourceFactory = { charactersDatabase.characterDao().getChar() }
     ).liveData
-     fun getDataFromApi() = Pager(
-        config = PagingConfig(pageSize = 20 , maxSize = 100),
-        pagingSourceFactory = {   CharacterPagingSource(characterService) }
+
+    fun getDataFromApi() = Pager(
+        config = PagingConfig(pageSize = 20, maxSize = 100),
+        pagingSourceFactory = { CharacterPagingSource(characterService) }
     ).liveData
 
 //   fun getSomeData() :LiveData<PagingData<Result>> {

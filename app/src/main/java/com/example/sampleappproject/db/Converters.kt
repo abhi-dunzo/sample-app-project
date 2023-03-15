@@ -6,11 +6,12 @@ import androidx.room.TypeConverter
 class Converters {
 
     @TypeConverter
-    fun locationToText(value : Location) :String{
+    fun locationToText(value: Location): String {
         return value.name
     }
+
     @TypeConverter
-    fun textToLocation(value : String) :Location{
+    fun textToLocation(value: String): Location {
         return Location(value)
     }
 }

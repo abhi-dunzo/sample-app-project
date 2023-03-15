@@ -12,12 +12,14 @@ import com.example.sampleappproject.paging.CharacterPagingSource
 @Dao
 interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addCharacters(characters :List<Result>)
+    suspend fun addCharacters(characters: List<Result>)
+
     @Query("SELECT * FROM characters WHERE page=:page")
-    suspend fun getCharacters(page:Int): List<Result>
+    suspend fun getCharacters(page: Int): List<Result>
 
     @Query("SELECT * FROM characters")
-     fun getChar(): PagingSource<Int ,Result>
+    fun getChar(): PagingSource<Int, Result>
+
     @Query("DELETE FROM characters")
     suspend fun delete()
 

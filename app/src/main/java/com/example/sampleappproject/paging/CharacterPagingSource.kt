@@ -7,7 +7,8 @@ import com.example.sampleappproject.models.Result
 import retrofit2.HttpException
 import java.io.IOException
 
-class CharacterPagingSource(private val characterService: CharacterService):PagingSource<Int,Result> (){
+class CharacterPagingSource(private val characterService: CharacterService) :
+    PagingSource<Int, Result>() {
     override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
@@ -26,8 +27,7 @@ class CharacterPagingSource(private val characterService: CharacterService):Pagi
                 prevKey = if (page == 1) null else page - 1,
                 nextKey = if (response.body()!!.info.pages == page) null else page + 1
             )
-        }
-        catch (exception: IOException) {
+        } catch (exception: IOException) {
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {
             return LoadResult.Error(exception)

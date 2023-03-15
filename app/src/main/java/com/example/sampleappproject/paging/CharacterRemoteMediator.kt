@@ -55,9 +55,8 @@ class CharacterRemoteMediator(
 
 //                    Log.d("hi" ,remoteKey.id)
                     val nextPage = remoteKey?.nextPage
-                        ?:
-                        return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
-                        nextPage
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
+                    nextPage
                 }
             }
             val response = characterService.getCharacters(currentPage)
@@ -66,35 +65,35 @@ class CharacterRemoteMediator(
             println(currentPage)
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextPage = if (endOfPagination) null else currentPage + 1
-//            charactersDatabase.withTransaction {
-//                if (loadType == LoadType.REFRESH) {
-//                    messagesMutableLiveData.postValue("load refresh in db transaction ")
-//
-//                    println("hi")
-//                    characterDao.delete()
-//                    characterRemoteDao.delete()
-//                }
-//                val keys = response.body()!!.results.map {
-//                    CharacterRemoteKeys(
-//                        id = it.id,
-//                        prevPage = prevPage,
-//                        nextPage = nextPage
-//                    )
-//                }
-//
-//                characterRemoteDao.addCharactersKeys(keys)
-//                characterDao.addCharacters(response.body()!!.results)
-//
-//            }
-            val keys  = response.body()!!.results.map{
-                CharacterRemoteKeys(
-                    id = it.id ,
-                    prevPage = prevPage,
-                    nextPage = nextPage
-                )
+            charactersDatabase.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    messagesMutableLiveData.postValue("load refresh in db transaction ")
+
+                    println("hi")
+                    characterDao.delete()
+                    characterRemoteDao.delete()
+                }
+                val keys = response.body()!!.results.map {
+                    CharacterRemoteKeys(
+                        id = it.id,
+                        prevPage = prevPage,
+                        nextPage = nextPage
+                    )
+                }
+
+                characterRemoteDao.addCharactersKeys(keys)
+                characterDao.addCharacters(response.body()!!.results)
+
             }
-            characterRemoteDao.addCharactersKeys(keys)
-            characterDao.addCharacters(response.body()!!.results)
+//            val keys  = response.body()!!.results.map{
+//                CharacterRemoteKeys(
+//                    id = it.id ,
+//                    prevPage = prevPage,
+//                    nextPage = nextPage
+//                )
+//            }
+//            characterRemoteDao.addCharactersKeys(keys)
+//            characterDao.addCharacters(response.body()!!.results)
             messagesMutableLiveData.postValue("end of pagination")
             MediatorResult.Success(endOfPaginationReached = endOfPagination)
 

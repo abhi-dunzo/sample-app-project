@@ -33,7 +33,7 @@ import org.mockito.MockitoAnnotations
 class MainViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
-    lateinit var  mainviewmodel :MainViewModel
+    lateinit var mainviewmodel: MainViewModel
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -55,21 +55,21 @@ class MainViewModelTest {
         Info(1, "2", 2, ""),
         listOf(
             Result(
-            created = "2017-11-0T18:48:46.250Z",
-            gender = "Male",
-            id = 1,
-            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            name = "Rick Sanchez",
-            species = "Human",
-            status = "Alive",
-            type = "",
-            url = "https://rickandmortyapi.com/api/character/1",
-            location = Location("hi"),1
-        )
+                created = "2017-11-0T18:48:46.250Z",
+                gender = "Male",
+                id = 1,
+                image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                name = "Rick Sanchez",
+                species = "Human",
+                status = "Alive",
+                type = "",
+                url = "https://rickandmortyapi.com/api/character/1",
+                location = Location("hi"), 1
+            )
         )
     )
 
-@Test
+    @Test
 //    fun test_items_contain_one_to_ten() = runTest {
 //        // Get the Flow of PagingData from the ViewModel under test
 //     val pagingData : LiveData<PagingData<Result>> = mainviewmodel.list
@@ -93,7 +93,6 @@ class MainViewModelTest {
 //            actual = itemsSnapshot
 //        )
 //    }
-
 
 
 //

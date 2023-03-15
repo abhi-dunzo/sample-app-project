@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
-    private val pagingDataAdapter : CharacterPagingAdapter = CharacterPagingAdapter()
+    private val pagingDataAdapter: CharacterPagingAdapter = CharacterPagingAdapter()
 //TODO ERROR HANDLING IN SCROLL PROGRESS -> error and progress states
 
 
@@ -46,10 +46,10 @@ class MainActivity : AppCompatActivity() {
             this
         ) {
             pagingDataAdapter.submitData(lifecycle, it)
-            recyclerView.adapter = pagingDataAdapter.withLoadStateFooter(footer=LoaderAdapter())
+            recyclerView.adapter = pagingDataAdapter.withLoadStateFooter(footer = LoaderAdapter())
 
             println(pagingDataAdapter.snapshot().items)
-            Log.d( "my",pagingDataAdapter.itemCount.toString())
+            Log.d("my", pagingDataAdapter.itemCount.toString())
         }
 
 
@@ -73,15 +73,16 @@ class MainActivity : AppCompatActivity() {
         }
         // TODO remove findViewID (binding)
     }
-private  fun handleError (loadState: CombinedLoadStates){
-    val errorState = loadState.source.append as? LoadState.Error ?: loadState.source.prepend as? LoadState.Error
-    errorState.let{
-        if (it != null) {
-            Toast.makeText(this , "handled error",Toast.LENGTH_SHORT).show()
+
+    private fun handleError(loadState: CombinedLoadStates) {
+        val errorState = loadState.source.append as? LoadState.Error
+            ?: loadState.source.prepend as? LoadState.Error
+        errorState.let {
+            if (it != null) {
+                Toast.makeText(this, "handled error", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-}
-
 
 
 }

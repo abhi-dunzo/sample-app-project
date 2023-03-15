@@ -20,11 +20,11 @@ class LoaderAdapter : LoadStateAdapter<LoaderAdapter.LoaderViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: LoaderViewHolder, loadState: LoadState) {
-             holder.bind(loadState)
+        holder.bind(loadState)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoaderViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.loader_item , parent , false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.loader_item, parent, false)
         return LoaderViewHolder(view)
     }
 }

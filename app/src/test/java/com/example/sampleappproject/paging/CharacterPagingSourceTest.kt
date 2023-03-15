@@ -24,20 +24,24 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CharacterPagingSourceTest{
+class CharacterPagingSourceTest {
 
     private val character = listOf(
-        Result("1" ,"" ,1 ,"MYiMAGE"  ,"TEST" ,"2" ,"2","2","www.google.com",
-        Location("location for testing"),1
-    ))
-        val res = CharacterList(info = Info(2,"2",1,"2") , results = character)
+        Result(
+            "1", "", 1, "MYiMAGE", "TEST", "2", "2", "2", "www.google.com",
+            Location("location for testing"), 1
+        )
+    )
+    val res = CharacterList(info = Info(2, "2", 1, "2"), results = character)
 
 
     private lateinit var pagingSource: CharacterPagingSource
+
     @Mock
-    private lateinit var characterService:CharacterService
+    private lateinit var characterService: CharacterService
+
     @Before
-    fun setup(){
+    fun setup() {
         pagingSource = CharacterPagingSource(characterService)
     }
 //

@@ -20,7 +20,7 @@ data class Result(
     val url: String,
     @TypeConverters
     val location: Location,
-    var page:Int,
+    var page: Int,
 
 //    @TypeConverters
 //    val origin: Origin

@@ -18,7 +18,7 @@ import org.w3c.dom.Text
 class CharacterFragment : Fragment() {
     private var title: String? = null
     private var imageUrl: String? = null
-    private var location :String? =null
+    private var location: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +35,7 @@ class CharacterFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_character, container, false)
         val titleField: TextView = view.findViewById(R.id.charTitle)
         val charImage: ImageView = view.findViewById(R.id.charImage)
-        val locationView : TextView  = view.findViewById(R.id.charLocation)
+        val locationView: TextView = view.findViewById(R.id.charLocation)
         locationView.text = location
         Glide.with(view).load(imageUrl)
             .placeholder(com.google.android.material.R.drawable.mtrl_ic_error)

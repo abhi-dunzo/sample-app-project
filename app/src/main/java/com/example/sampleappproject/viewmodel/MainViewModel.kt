@@ -15,9 +15,10 @@ import com.example.sampleappproject.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: CharacterRepository):ViewModel() {
-     var pageNumber  = 1;
-//    init{
+class MainViewModel(private val repository: CharacterRepository) : ViewModel() {
+    var pageNumber = 1;
+
+    //    init{
 //        viewModelScope.launch(Dispatchers.IO) {
 //            try {
 //                repository.getCharacters(pageNumber)
@@ -30,15 +31,14 @@ class MainViewModel(private val repository: CharacterRepository):ViewModel() {
 //    }
     val list = repository.getData().cachedIn(viewModelScope)
 
-//    val characters  : LiveData<CharacterList>
+    //    val characters  : LiveData<CharacterList>
 //    get() = repository.characters
     //TODO live data
-    val messagesLiveData : LiveData<String>
-    get() = repository.messages
+    val messagesLiveData: LiveData<String>
+        get() = repository.messages
 
-    private val messages : MutableLiveData<String>
-    get() = messagesLiveData as MutableLiveData<String>
-
+    private val messages: MutableLiveData<String>
+        get() = messagesLiveData as MutableLiveData<String>
 
 
 //    fun nextData() {

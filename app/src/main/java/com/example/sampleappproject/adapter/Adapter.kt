@@ -18,6 +18,7 @@ import com.example.sampleappproject.MainActivity
 import com.example.sampleappproject.fragments.CharacterFragment
 import com.example.sampleappproject.R
 import com.example.sampleappproject.models.Result
+
 //TODO list adapter with diff callback difference with adapter
 //TODO helps with paging
 class Adapter(private val characterList: List<Result>) :
@@ -40,7 +41,8 @@ class Adapter(private val characterList: List<Result>) :
     override fun getItemCount(): Int {
         return characterList.size
     }
-//TODO trailing commas in kotlin
+
+    //TODO trailing commas in kotlin
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.apply {
             characterName.text = characterList[position].name
@@ -62,7 +64,10 @@ class Adapter(private val characterList: List<Result>) :
             //TODO practices
             bundle.putString(R.string.Title.toString(), characterList[position].name)
             bundle.putString(R.string.image_url.toString(), characterList[position].image)
-            bundle.putString(R.string.location_name.toString(), characterList[position].location.name)
+            bundle.putString(
+                R.string.location_name.toString(),
+                characterList[position].location.name
+            )
             fragment.arguments = bundle
             //TODO setReorderingAllowed & addToBackStack
             activity.supportFragmentManager.beginTransaction().setReorderingAllowed(true)
@@ -70,7 +75,6 @@ class Adapter(private val characterList: List<Result>) :
                 .addToBackStack(null).commit()
 
         }
-
 
 
     }
